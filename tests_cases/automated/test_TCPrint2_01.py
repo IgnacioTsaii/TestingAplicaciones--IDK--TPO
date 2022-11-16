@@ -20,6 +20,7 @@ class TestTCPrint201():
   
   def test_tCPrint201(self):
     self.driver.get("http://127.0.0.1:5000/")
+    assert "http://127.0.0.1:5000/" == self.driver.current_url
     self.driver.set_window_size(1512, 882)
     self.driver.find_element(By.LINK_TEXT, "Sign In").click()
     self.driver.find_element(By.NAME, "email").click()
