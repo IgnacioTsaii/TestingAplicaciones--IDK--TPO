@@ -21,10 +21,15 @@ class TestTCPrint201():
   def test_tCPrint201(self):
     self.driver.get("http://127.0.0.1:5000/")
     assert "http://127.0.0.1:5000/" == self.driver.current_url
+    # title1 = self.driver.find_element(By.XPATH, "/html/head/title")
+    # assert "Welcome" in title1
     self.driver.set_window_size(1512, 882)
     self.driver.find_element(By.LINK_TEXT, "Sign In").click()
+    assert "http://127.0.0.1:5000/loginForm" == self.driver.current_url
     self.driver.find_element(By.NAME, "email").click()
     self.driver.find_element(By.NAME, "email").send_keys("user@email.com")
+    # value = self.driver.find_element()
+    # assert "value" == self.driver.find_element()
     self.driver.find_element(By.NAME, "password").click()
     self.driver.find_element(By.NAME, "password").send_keys("123")
     self.driver.find_element(By.CSS_SELECTOR, "p:nth-child(3) > input").click()

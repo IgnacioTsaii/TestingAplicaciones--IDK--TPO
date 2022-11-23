@@ -2,6 +2,7 @@
 import pytest
 import time
 import json
+import random
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
@@ -9,6 +10,28 @@ from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
+
+letras = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u",
+          "v", "w", "x", "y", "z"]
+
+random_register = {}  # Elijo un diccionario porque puedo tomar varios key y value
+lista_mail = []
+for i in range(5):
+    lista_mail.append(random.choice(letras))
+
+mail = ''.join(lista_mail) + "@email.com"
+random_register["email"] = mail
+
+lista_password = []
+for i in range(8):
+    lista_password.append(random.choice(letras))
+
+contra = ''.join(lista_password) + str(random.randint(1, 10))
+random_register["password"] = contra
+
+nombre = "ignacio" + str(random.randint(1, 100000000000))
+random_register["firstName"] = nombre
+
 
 class TestRegister():
   def setup_method(self, method):
@@ -20,14 +43,20 @@ class TestRegister():
   
   def test_register(self):
     self.driver.get("http://127.0.0.1:5000/")
+    assert "http://127.0.0.1:5000/" == self.driver.current_url
     self.driver.set_window_size(1512, 882)
     self.driver.find_element(By.LINK_TEXT, "Sign In").click()
     self.driver.find_element(By.LINK_TEXT, "Register here").click()
+    assert "http://127.0.0.1:5000/registerationForm" == self.driver.current_url
     self.driver.find_element(By.NAME, "email").click()
-    self.driver.find_element(By.NAME, "email").send_keys("example5@email.com")
-    self.driver.find_element(By.ID, "password").send_keys("123")
-    self.driver.find_element(By.ID, "cpassword").send_keys("123")
-    self.driver.find_element(By.NAME, "firstName").send_keys("Ignacio4")
+    self.driver.find_element(By.NAME, "email").send_keys(random_register["email"])
+    assert self.driver.find_element(By.NAME, "email").get_attribute("value") == random_register["email"]
+    self.driver.find_element(By.ID, "password").send_keys(random_register["password"])
+    assert self.driver.find_element(By.NAME, "password").get_attribute("value") == random_register["password"]
+    self.driver.find_element(By.ID, "cpassword").send_keys(random_register["password"])
+    assert self.driver.find_element(By.NAME, "cpassword").get_attribute("value") == random_register["password"]
+    self.driver.find_element(By.NAME, "firstName").send_keys(random_register["firstName"])
+    assert self.driver.find_element(By.NAME, "firstName").get_attribute("value") == random_register["firstName"]
     self.driver.find_element(By.NAME, "lastName").send_keys("Tsai")
     self.driver.find_element(By.NAME, "address1").send_keys("line1")
     self.driver.find_element(By.NAME, "address2").send_keys("line2")
@@ -44,11 +73,11 @@ class TestRegister():
     self.driver.find_element(By.CSS_SELECTOR, "p:nth-child(13) > input").click()
     self.driver.find_element(By.CSS_SELECTOR, "body").click()
     self.driver.find_element(By.NAME, "email").click()
-    self.driver.find_element(By.NAME, "email").send_keys("example5@email.com")
+    self.driver.find_element(By.NAME, "email").send_keys(random_register["email"])
     self.driver.find_element(By.NAME, "password").click()
     element = self.driver.find_element(By.NAME, "password")
     actions = ActionChains(self.driver)
     actions.double_click(element).perform()
-    self.driver.find_element(By.NAME, "password").send_keys("123")
+    self.driver.find_element(By.NAME, "password").send_keys(random_register["password"])
     self.driver.find_element(By.CSS_SELECTOR, "p:nth-child(3) > input").click()
   
