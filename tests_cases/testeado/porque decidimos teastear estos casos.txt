@@ -1,0 +1,1 @@
+Decidimos testear estos casos de prueba, primero, porque son de prioridad alta. Segundo, consideramos que la pagina no podria ser funcional sin estos casos de prueba testeados y que hayan pasado los test (con todos los requerimiento)
