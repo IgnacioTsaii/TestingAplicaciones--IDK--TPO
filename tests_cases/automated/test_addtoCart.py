@@ -2,6 +2,7 @@
 import pytest
 import time
 import json
+import requests
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
@@ -17,6 +18,8 @@ class TestAddtoCart():
   
   def teardown_method(self, method):
     self.driver.quit()
+
+  requests.get("http://127.0.0.1:5000/removeFromCart?productId=1")
   
   def test_addtoCart(self):
     self.driver.get("http://127.0.0.1:5000/")
